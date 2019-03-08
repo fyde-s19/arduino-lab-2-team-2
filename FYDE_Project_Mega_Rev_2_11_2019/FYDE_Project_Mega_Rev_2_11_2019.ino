@@ -45,13 +45,13 @@ int     Pin_Number  = 255;
 int     Pin_Integer = 0;
 float   Pin_Float   = 0.0;
 
-char    ssid[32]        = "iPhoneXR"; 
-char    pass[32]        = "bullybully";
+//char    ssid[32]        = "utexas-iot"; 
+//char    pass[32]        = "4046374722964808";
 
-//char    ssid[32]        = "EE-IOT-Platform-02"; 
-//char    pass[32]        = "dUQQE?&W44x7";
+char    ssid[32]        = "EE-IOT-Platform-02"; 
+char    pass[32]        = "dUQQE?&W44x7";
 
-char    auth[256]  = "3249371193124d6ba26f0abe3f65ed2de";   // For FYDE projects only
+char    auth[256]  = "63db023049e54d099f544e216df2d938";   // For FYDE projects only
 
 
 // **********************************
@@ -175,13 +175,14 @@ void ReadSensors(void) {
     Serial1.print(",");
     Serial1.print((sensorValueNew/1023)*5);
     Serial1.print("\n");
-    
+    dimmer(100,(sensorValueNew/1023)*5);
     Serial.print(51);
     Serial.print(",");
     Serial.print(0);
     Serial.print(",");
     Serial.print((sensorValueNew/1023)*5);
     Serial.print("\n");
+    dimmer(100,(sensorValueNew/1023)*5);
     sensorValueOld = sensorValueNew;
   
     //Serial.print("Analog pin value = ");
@@ -190,7 +191,16 @@ void ReadSensors(void) {
   }
 }
 
-
+void dimmer(int freq, int duty){
+  int period, onTime, offTime;
+  period = 1000/freq;
+  onTime = period * duty/100;
+  offTime = period - onTime;
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(onTime);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(offTime);
+}
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 // 
@@ -241,5 +251,6 @@ void loop() {
   ESP8266_to_Mega();
   delay(400);
   ReadSensors();
-  delay(300);  
+//  delay(300);  
+  delay(2000); //For 2 second delay
 }
