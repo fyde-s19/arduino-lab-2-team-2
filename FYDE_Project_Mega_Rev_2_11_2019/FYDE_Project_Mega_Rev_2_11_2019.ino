@@ -1,11 +1,8 @@
 /******************************************************
-
  RUN ME ON YOUR MEGA!!!
-
  This program sends your network and blynk token information
  to the WiFi module over serial, then should recieve characters over
  serial from the WiFi module in return.
-
  1) Wire Module:
  Wire according to this picture: https://www.forward.com.au/pfod/ESP8266/GPIOpins/ESP8266_01.jpg
  - Connect VCC and CH_PD to 3.3V on the arduino
@@ -14,12 +11,10 @@
  - Connect GND to GND
  
  2) Go to Tools -> Board and select Arduino/Genuino Mega or Mega 2560
-
  3) Sign up for Blynk (https://www.blynk.cc/) and install the app on your phone.
  MAKE SURE TO CREATE AND WRITE DOWN YOUR TOKEN!!!
  Then, go to Sketch -> Include Library -> Manage Libraries and search 'Blynk' and
  install the library
-
  4) Change the network name, password, and blynk token in the code to reflect your own 
  
  5) Finish writing the serial recieve in the 'void loop()'
@@ -27,7 +22,6 @@
  - Continuously look for serial input on Serial 1 
  - Take any character recieved on Serial 1 and print
  the data out through the main Serial 
-
  6) Open a serial monitor by going to
  Tools -> Serial Monitor and set to 9600 baud once open to see output
  and run!
@@ -45,13 +39,13 @@ int     Pin_Number  = 255;
 int     Pin_Integer = 0;
 float   Pin_Float   = 0.0;
 
-char    ssid[32]        = "iPhoneXR"; 
-char    pass[32]        = "bullybully";
+//char    ssid[32]        = "utexas-iot"; 
+//char    pass[32]        = "4046374722964808";
 
-//char    ssid[32]        = "EE-IOT-Platform-02"; 
-//char    pass[32]        = "dUQQE?&W44x7";
+char    ssid[32]        = "EE-IOT-Platform-02"; 
+char    pass[32]        = "dUQQE?&W44x7";
 
-char    auth[256]  = "3249371193124d6ba26f0abe3f65ed2de";   // For FYDE projects only
+char    auth[256]  = "63db023049e54d099f544e216df2d938";   // For FYDE projects only
 
 
 // **********************************
@@ -175,13 +169,14 @@ void ReadSensors(void) {
     Serial1.print(",");
     Serial1.print((sensorValueNew/1023)*5);
     Serial1.print("\n");
-    
+    dimmer(100,(sensorValueNew/1023)*5);
     Serial.print(51);
     Serial.print(",");
     Serial.print(0);
     Serial.print(",");
     Serial.print((sensorValueNew/1023)*5);
     Serial.print("\n");
+    dimmer(100,(sensorValueNew/1023)*5);
     sensorValueOld = sensorValueNew;
   
     //Serial.print("Analog pin value = ");
@@ -190,7 +185,16 @@ void ReadSensors(void) {
   }
 }
 
-
+void dimmer(int freq, int duty){
+  int period, onTime, offTime;
+  period = 1000/freq;
+  onTime = period * duty/100;
+  offTime = period - onTime;
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(onTime);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(offTime);
+}
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 // 
@@ -241,5 +245,6 @@ void loop() {
   ESP8266_to_Mega();
   delay(400);
   ReadSensors();
-  delay(300);  
+//  delay(300);  
+  delay(2000); //For 2 second delay (don't overload the Blynk servers).
 }
