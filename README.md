@@ -1,9 +1,14 @@
 # arduino-lab-2-team-2
 
-1. What is happening with the dimmer code pattern in part D step 3? When connected to the dimmer code, on Waveforms, it looks like the
+Fawaz (Syed)
+Sai
+Rishabh
+Amitesh
+
+1. What is happening with the dimmer code pattern in part D step 3? When connected to the dimmer code on Waveforms, it looks like the
 simulated logic analyzer from our breathing 319K lab 3  as it shows rapidly increasing and decreasing duty cycles. 
 
-2. What does the decoded message say in part D step 4?  The decoded message says a number in hex.
+2. What does the decoded message say in part D step 4?  The decoded message displays a number in hex.
 
 3-6: Didn't get to do individual measurements (Said to say my name is (Syed) Fawaz Usmani and there wasn't enough time to do 
 this using the logic analyzers as there were too many groups that came last minute.)
